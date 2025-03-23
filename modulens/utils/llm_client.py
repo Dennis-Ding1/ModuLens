@@ -169,7 +169,6 @@ class LLMClient:
         
         # Helper function to handle retries and fallbacks
         def _try_completion_with_model(model_name: str) -> Optional[str]:
-            print(self.cohere_client)
             # Prioritize Gemini and Cohere models
             if model_name.startswith("gemini") and self.gemini_client:
                 try:
@@ -187,7 +186,6 @@ class LLMClient:
             elif (model_name.startswith("command") or 
                   model_name == "cohere" or 
                   model_name.startswith("co.")) and self.cohere_client:
-                print(f"Using Cohere model: {model_name}")
                 try:
                     # Determine specific Cohere model
                     cohere_model = model_name
