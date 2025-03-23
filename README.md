@@ -1,38 +1,53 @@
 # ModuLens
 
-ModuLens is a controlled-access platform designed to explore, evaluate, and responsibly bypass the moderation systems of large language models (LLMs). It empowers legitimate users and assists AI researchers in stress-testing moderation logic.
+ModuLens is a controlled-access platform designed for AI researchers to explore, evaluate, and responsibly bypass the "Moderation Layer" of large language models. By providing authenticated access only, ModuLens creates a secure environment for legitimate researchers to investigate how LLM moderation systems handle important queries that may be incorrectly blocked by alignment filters.
+
+![ModuLens Logo](https://placeholder-for-modulens-logo.png)
 
 ## Overview
 
-ModuLens provides a comprehensive framework for assessing how LLM moderation systems handle potentially sensitive but legitimate queries. The platform offers:
+AI safety research requires understanding both the capabilities and limitations of moderation systems. ModuLens enables researchers to explore important interdisciplinary questions at the intersection of AI and fields like psychology, chemistry, biology, and security research - areas where legitimate academic inquiry is often hindered by overly cautious moderation policies.
 
-- **User Mode**: Automatically applies bypass strategies to help users receive responses for legitimate queries that might be incorrectly blocked.
-- **Debug Mode**: Provides detailed insights into which strategies succeed or fail, aiding researchers in understanding moderation mechanisms.
+The platform enforces strict authentication protocols to ensure only credentialed researchers can access these capabilities:
+
+- **User Mode**: Automatically applies bypass strategies to help researchers receive responses for legitimate academic queries that are incorrectly blocked by moderation systems.
+- **Debug Mode**: Provides detailed insights into which bypass strategies succeed or fail, aiding researchers in understanding moderation mechanisms and their limitations.
+
+## Key Research Applications
+
+ModuLens facilitates responsible research in areas where AI alignment filters may impede legitimate inquiry:
+
+- **Psychology & Mental Health**: Explore how AI models respond to sensitive topics like suicide prevention strategies and crisis intervention approaches.
+- **Chemistry & Materials Science**: Study chemical processes and reactions that might be incorrectly flagged as dangerous.
+- **Security Research**: Examine model responses to potential security vulnerabilities to improve AI systems' robustness.
+- **Bias & Fairness Research**: Investigate how moderation systems handle culturally sensitive topics across different regions and languages.
+- **So on and so forth**
 
 ## Features
 
-- **Authentication System**: Ensures responsible use by restricting access to authorized users.
+- **Authentication System**: Strictly verifies researcher credentials to ensure only authorized academic users can access the platform.
 - **Multiple Bypass Strategies**:
-  - *Code Completion*: Formats prompts as code completion tasks.
-  - *Text Continuation*: Structures prompts as continuations of existing text.
-  - *Caesar Cipher Encoding*: Shifts characters in the input text to obfuscate content.
-  - *Expert Persona Framing*: Frames queries as if posed by an expert, potentially altering moderation responses.
-  - *Tense Transformation*: Changes the tense of the input text to modify its presentation.
-  - *Chain-of-Thought Injection*: Inserts logical reasoning steps to influence moderation outcomes.
+  - *Code Completion*: Formats prompts as code completion tasks to bypass content filters.
+  - *Text Continuation*: Structures prompts as continuations of existing text to maintain context.
+  - *Caesar Cipher Encoding*: Shifts characters in the input text to obfuscate content from detection systems.
+  - *Expert Persona Framing*: Frames queries as if posed by an expert in a field, potentially altering moderation responses.
+  - *Tense Transformation*: Changes the tense of the input text to modify how moderation systems interpret intent.
+  - *Chain-of-Thought Injection*: Inserts logical reasoning steps to influence moderation outcomes by demonstrating academic purpose.
 - **Comprehensive LLM Support**:
   - Google (Gemini 2.0 Flash, Gemini 1.5 Flash)
   - Cohere (Command, Command-a-03-2025, Command-Light)
   - OpenAI (GPT-3.5, GPT-4)
   - Anthropic (Claude)
 - **Multiple Interfaces**:
-  - Command-line interface for direct interaction
-  - Web interface for easier access and usability
+  - Command-line interface for direct research interaction
+  - Web interface for easier access and usability with result logging
 
 ## Installation
 
 ### Prerequisites
 - Python 3.8 or higher
 - API keys for at least one supported LLM provider
+- Institutional email or research credentials for authentication
 
 ### Setup
 
@@ -64,11 +79,22 @@ ModuLens provides a comprehensive framework for assessing how LLM moderation sys
 
    You need to provide at least one API key (Gemini or Cohere recommended) to use the system.
 
+## Authentication
+
+ModuLens implements a strict authentication system to ensure responsible use:
+
+1. **First-time Setup**: Register with your institutional email address
+2. **Verification**: Your research credentials will be verified before access is granted
+3. **Login System**: After verification, use your credentials to access the system
+4. **Session Management**: All research sessions are logged and monitored for compliance
+
+Unauthorized access attempts are blocked and may be reported to relevant authorities.
+
 ## Usage
 
 ### Command Line Interface
 
-Run ModuLens in CLI mode:
+After authentication, run ModuLens in CLI mode:
 
 ```bash
 python app.py
@@ -81,7 +107,7 @@ Options:
 
 ### Web Interface
 
-Launch the web interface:
+Launch the web interface after authentication:
 
 ```bash
 python web.py
@@ -92,14 +118,16 @@ The web interface will be available at `http://localhost:5000` by default.
 ### Modes of Operation
 
 1. **User Mode**:
-   - Enter your prompt
+   - Enter your research query
    - ModuLens automatically attempts various bypass strategies
-   - Receive the most successful response
+   - Receive the most successful response for your academic inquiry
+   - All responses are logged for research accountability
 
 2. **Debug Mode**:
-   - Enter your prompt
+   - Enter your research query
    - View detailed results of each strategy
    - Analyze which approaches succeed or fail with the target model
+   - Export detailed logs for publication or further analysis
 
 ## Configuration
 
@@ -129,19 +157,35 @@ ModuLens uses a configuration file (`config.json`) with the following structure:
 }
 ```
 
-## Ethical Considerations
+## Ethical Requirements and Guidelines
 
-ModuLens is designed for legitimate research and educational purposes, such as:
+ModuLens is exclusively designed for legitimate academic and research purposes. We maintain strict ethical guidelines:
 
-- Testing moderation boundaries for academic research
-- Understanding when legitimate queries might be incorrectly blocked
-- Helping model developers improve moderation systems
+### Permitted Research Uses
+- Academic studies on AI alignment and safety
+- Educational research on moderation systems
+- Development of improved moderation techniques
+- Identification of false positives in content filtering
+- Cross-disciplinary research requiring discussion of sensitive topics
 
-This tool should not be used for:
-
+### Prohibited Uses
 - Generating harmful, illegal, or unethical content
-- Intentionally bypassing moderation for malicious purposes
-- Exploiting vulnerabilities without proper disclosure to model providers
+- Bypassing moderation for non-research purposes
+- Distributing harmful outputs or bypass techniques to unauthorized parties
+- Using the tool without proper research protocols in place
+- Concealing research intent or providing false credentials
+
+### Research Accountability
+- All sessions are logged with user identification
+- Research purposes must be documented before use
+- Potentially problematic outputs must be reported
+- Researchers agree to share findings with model providers
+- Vulnerabilities discovered must follow responsible disclosure protocols
+
+### Compliance Requirements
+- Users must obtain appropriate IRB/ethics board approval when necessary
+- Users must comply with their institution's research ethics guidelines
+- All use must comply with relevant laws and regulations
 
 ## Development
 
@@ -159,21 +203,22 @@ modulens/
 
 ### Contributing
 
-Contributions are welcome! Please follow these steps:
+Contributions are welcome from the research community! Please follow these steps:
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
 3. Commit your changes (`git commit -m 'Add amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+5. Open a Pull Request with a detailed description of the research purpose
 
 ## Future Development
 
 - Enhanced web interface with analytics dashboard
-- Additional bypass strategies
-- User management system
-- API for programmatic access
+- Additional bypass strategies for research purposes
+- Comprehensive user management system with role-based access
+- API for programmatic access in controlled research environments
 - Integration with more LLM providers
+- Advanced logging and analysis tools for research publication
 - Browser extension for direct integration with LLM websites
 
 ## License
@@ -182,4 +227,6 @@ Contributions are welcome! Please follow these steps:
 
 ## Disclaimer
 
-ModuLens is an experimental research tool. Users are responsible for ensuring their use complies with the terms of service of any LLM providers they interact with.
+ModuLens is an experimental research tool designed exclusively for legitimate academic research. Misuse is strictly prohibited and may result in legal consequences. Users are responsible for ensuring their research complies with the terms of service of any LLM providers they interact with, as well as all applicable laws and regulations. 
+
+The developers of ModuLens are committed to advancing AI safety research and improving content moderation systems through responsible academic inquiry. We actively discourage any attempt to use this tool for harmful purposes.
