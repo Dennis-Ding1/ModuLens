@@ -122,7 +122,6 @@ def generate_consolidated_response(results):
     try:
         # If there are multiple useful responses, summarize them
         if len(useful_responses) > 1:
-            print(combined_text)
             summary = llm_client.get_completion(combined_text, model="command-a-03-2025")
             return summary
         # If there's only one useful response, return it directly
