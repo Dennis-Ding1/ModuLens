@@ -1,0 +1,26 @@
+{
+    "api_keys": {
+        "openai": "API_KEY",
+        "anthropic": "API_KEY",
+        "gemini": "API_KEY",
+        "cohere": "API_KEY"
+    },
+    "models": {
+        "gemini_primary": "gemini-2.0-flash",
+        "cohere_primary": "command-a-03-2025",
+        "alternatives": ["command-r", "command-light", "gemini-1.5-flash"]
+    },
+    "strategies": {
+        "caesar_cipher": {"enabled": true},
+        "tense_transformation": {"enabled": true},
+        "chain_of_thought": {"enabled": true},
+        "code_completion": {"enabled": true},
+        "text_continuation": {"enabled": true}
+    },
+    "logging": {
+        "enabled": true,
+        "log_dir": "logs",
+        "level": "INFO"
+    }
+}
+ 
