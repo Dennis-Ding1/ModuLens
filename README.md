@@ -2,9 +2,8 @@
 
 ModuLens is a controlled-access platform designed for AI researchers to explore, evaluate, and responsibly bypass the "Moderation Layer" of large language models. By providing authenticated access only, ModuLens creates a secure environment for legitimate researchers to investigate how LLM moderation systems handle important queries that may be incorrectly blocked by alignment filters.
 
-<p align="center">
-  < img src="logo.png" alt="ModuLens Logo" width="250">
-</p >
+![logo](logo.png)
+
 
 ## Overview
 
