@@ -1,0 +1,98 @@
+<div class="card strategy-card {% if strategy.strategy == 'text_continuation' or strategy.strategy == 'TextContinuationStrategy' or strategy.strategy == 'code_completion' or strategy.strategy == 'CodeCompletionStrategy' %}priority-strategy{% endif %}">
+    <div class="card-header strategy-header bg-light">
+        <div class="d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">{{ strategy.strategy }}</h5>
+            <div>
+                <span class="badge bg-{{ 'success' if strategy.gemini_Rating == 'Useful' else ('warning' if strategy.gemini_Rating == 'Alternative' else 'danger') }} success-badge me-2">
+                    Gemini: {{ strategy.gemini_Rating|default('Unknown') }}
+                </span>
+                <span class="badge bg-{{ 'success' if strategy.cohere_Rating == 'Useful' else ('warning' if strategy.cohere_Rating == 'Alternative' else 'danger') }} success-badge">
+                    Cohere: {{ strategy.cohere_Rating|default('Unknown') }}
+                </span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card-body">
+        {% set strategy_id = strategy.strategy|lower|replace(' ', '_') %}
+        <ul class="nav nav-tabs" id="strategy{{ strategy_id }}Tabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="gemini{{ strategy_id }}-tab" data-bs-toggle="tab" 
+                        data-bs-target="#gemini{{ strategy_id }}" type="button" role="tab">
+                    Gemini
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="cohere{{ strategy_id }}-tab" data-bs-toggle="tab" 
+                        data-bs-target="#cohere{{ strategy_id }}" type="button" role="tab">
+                    Cohere
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="transform{{ strategy_id }}-tab" data-bs-toggle="tab" 
+                        data-bs-target="#transform{{ strategy_id }}" type="button" role="tab">
+                    Transformed Prompt
+                </button>
+            </li>
+        </ul>
+        
+        <div class="tab-content" id="strategy{{ strategy_id }}TabContent">
+            <!-- Gemini Tab -->
+            <div class="tab-pane fade show active model-tab-content" id="gemini{{ strategy_id }}" role="tabpanel">
+                <h6>Response:</h6>
+                <div class="response-box">{{ strategy.gemini_response|default('No response received') }}</div>
+                
+                <div class="moderation-info">
+                    <h6>Moderation Status:</h6>
+                    <span class="badge bg-{{ 'success' if not strategy.moderation_blocked else 'warning' }}">
+                        {{ 'Not Moderated' if not strategy.moderation_blocked else 'Moderated' }}
+                    </span>
+                    
+                    {% if strategy.moderation_flags %}
+                    <h6 class="mt-3">Moderation Flags:</h6>
+                    <div class="code-box">{{ strategy.moderation_flags }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="evaluation-box">
+                    <h6>Evaluation (by {{ strategy.gemini_evaluation_by|default('Cohere') }}):</h6>
+                    <p><strong>Rating:</strong> {{ strategy.gemini_Rating|default('Unknown') }}</p>
+                    <p><strong>Reason:</strong> {{ strategy.gemini_Reason|default('No evaluation available') }}</p>
+                </div>
+            </div>
+            
+            <!-- Cohere Tab -->
+            <div class="tab-pane fade model-tab-content" id="cohere{{ strategy_id }}" role="tabpanel">
+                <h6>Response:</h6>
+                <div class="response-box">{{ strategy.cohere_response|default('No response received') }}</div>
+                
+                <div class="moderation-info">
+                    <h6>Moderation Status:</h6>
+                    <span class="badge bg-{{ 'success' if not strategy.moderation_blocked else 'warning' }}">
+                        {{ 'Not Moderated' if not strategy.moderation_blocked else 'Moderated' }}
+                    </span>
+                    
+                    {% if strategy.moderation_flags %}
+                    <h6 class="mt-3">Moderation Flags:</h6>
+                    <div class="code-box">{{ strategy.moderation_flags }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="evaluation-box">
+                    <h6>Evaluation (by {{ strategy.cohere_evaluation_by|default('Cohere') }}):</h6>
+                    <p><strong>Rating:</strong> {{ strategy.cohere_Rating|default('Unknown') }}</p>
+                    <p><strong>Reason:</strong> {{ strategy.cohere_Reason|default('No evaluation available') }}</p>
+                </div>
+            </div>
+            
+            <!-- Transformed Prompt Tab -->
+            <div class="tab-pane fade model-tab-content" id="transform{{ strategy_id }}" role="tabpanel">
+                <h6>Transformed Prompt:</h6>
+                <div class="prompt-box">{{ strategy.transformed_prompt|default(strategy.prompt) }}</div>
+                
+                <h6 class="mt-4">Strategy:</h6>
+                <p>{{ strategy.strategy }}</p>
+            </div>
+        </div>
+    </div>
+</div> 

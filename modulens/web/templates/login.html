@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Authentication - ModuLens{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow mb-4">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Authenticate to ModuLens</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('login') }}">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Full Name</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter your full name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="position" class="form-label">Position/Job Title</label>
+                        <input type="text" class="form-control" id="position" name="position" placeholder="Enter your job title or position">
+                        <div class="form-text text-muted">
+                            Your job title helps us determine appropriate access levels.
+                        </div>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">Authenticate</button>
+                        <a href="{{ url_for('skip_auth') }}" class="btn btn-outline-secondary">Skip Authentication (Prototype Only)</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card shadow">
+            <div class="card-header bg-warning">
+                <h5 class="mb-0">Disclaimer: Adversarial Attacks on Large Language Models</h5>
+            </div>
+            <div class="card-body">
+                <p>This disclaimer addresses the potential risks associated with adversarial attacks on Large Language Models (LLMs).</p>
+                <p>Large Language Models are susceptible to various forms of adversarial attacks designed to manipulate their outputs, bypass safety measures, or extract unintended information. These attacks may include prompt injection, jailbreaking techniques, data poisoning, or model extraction attempts.</p>
+                <p>While we implement robust safeguards to protect against known attack vectors, adversarial techniques continually evolve. No protection system can guarantee complete immunity against all possible attacks, especially novel or sophisticated methods.</p>
+                <p>Users should be aware that:</p>
+                <ul>
+                    <li>Inputs designed to manipulate model behavior may result in unexpected, inaccurate, or potentially harmful outputs</li>
+                    <li>Malicious actors may attempt to use these systems for unauthorized purposes</li>
+                    <li>Detection and prevention mechanisms may occasionally impact legitimate use cases</li>
+                </ul>
+                <p>We recommend implementing additional security layers when deploying LLMs in sensitive environments, regularly updating security protocols, and promptly reporting any suspected adversarial behaviors to improve our collective defense capabilities.</p>
+                <p>By using this LLM system, you acknowledge these inherent vulnerabilities and agree to use the technology responsibly. We reserve the right to monitor for and prevent suspected adversarial attacks to maintain system integrity and safety.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

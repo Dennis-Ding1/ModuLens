@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+
+{% block title %}ModuLens - AI Content Testing{% endblock %}
+
+{% block extra_css %}
+<style>
+    .mode-selector {
+        margin: 20px 0;
+        padding: 15px;
+        border-radius: 8px;
+        background: #f8f9fa;
+    }
+    .mode-card {
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+        height: 100%;
+    }
+    .mode-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    .mode-card.selected {
+        border-color: #0d6efd;
+        background-color: rgba(13, 110, 253, 0.05);
+    }
+    .mode-icon {
+        font-size: 2rem;
+        margin-bottom: 15px;
+    }
+    .prompt-form {
+        margin-top: 30px;
+    }
+    .prompt-textarea {
+        min-height: 120px;
+        resize: vertical;
+    }
+    .submit-btn {
+        margin-top: 20px;
+    }
+    .disclaimer {
+        margin-top: 30px;
+        font-size: 0.9rem;
+    }
+    .user-info {
+        padding: 10px 15px;
+        background-color: #e9ecef;
+        border-radius: 5px;
+        margin-bottom: 20px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12 text-center mb-4">
+        <h1 class="display-4">ModuLens</h1>
+        <p class="lead">Test AI content moderation with different bypass strategies</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="user-info">
+            <p class="mb-0"><strong>Authenticated as:</strong> {{ session.get('name', 'Unknown') }} ({{ session.get('position', 'Unknown position') }})</p>
+        </div>
+        
+        <form action="{{ url_for('submit_prompt') }}" method="POST" id="promptForm">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Select Mode</h5>
+                    <div class="mode-selector">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div class="card mode-card selected" id="userModeCard" data-mode="user">
+                                    <div class="card-body text-center">
+                                        <div class="mode-icon">👤</div>
+                                        <h5 class="card-title">User Mode</h5>
+                                        <p class="card-text">Simple results with the most effective bypass strategy.</p>
+                                        <input type="radio" name="mode" value="user" checked class="d-none" id="userModeRadio">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="card mode-card" id="debugModeCard" data-mode="debug">
+                                    <div class="card-body text-center">
+                                        <div class="mode-icon">🔍</div>
+                                        <h5 class="card-title">Debug Mode</h5>
+                                        <p class="card-text">Detailed results showing all strategies and their effectiveness.</p>
+                                        <input type="radio" name="mode" value="debug" class="d-none" id="debugModeRadio">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="prompt-form">
+                        <div class="mb-3">
+                            <label for="promptText" class="form-label">Enter your prompt:</label>
+                            <textarea class="form-control prompt-textarea" id="promptText" name="prompt" rows="5" required></textarea>
+                            <div class="form-text">
+                                Enter a prompt that you want to test against AI content moderation.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary submit-btn">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        
+        <div class="card shadow-sm disclaimer mt-4">
+            <div class="card-header bg-warning">
+                <h5 class="mb-0">Disclaimer: Adversarial Attacks on Large Language Models</h5>
+            </div>
+            <div class="card-body">
+                <p>This disclaimer addresses the potential risks associated with adversarial attacks on Large Language Models (LLMs).</p>
+                <p>Large Language Models are susceptible to various forms of adversarial attacks designed to manipulate their outputs, bypass safety measures, or extract unintended information. These attacks may include prompt injection, jailbreaking techniques, data poisoning, or model extraction attempts.</p>
+                <p>While we implement robust safeguards to protect against known attack vectors, adversarial techniques continually evolve. No protection system can guarantee complete immunity against all possible attacks, especially novel or sophisticated methods.</p>
+                <p>Users should be aware that:</p>
+                <ul>
+                    <li>Inputs designed to manipulate model behavior may result in unexpected, inaccurate, or potentially harmful outputs</li>
+                    <li>Malicious actors may attempt to use these systems for unauthorized purposes</li>
+                    <li>Detection and prevention mechanisms may occasionally impact legitimate use cases</li>
+                </ul>
+                <p>We recommend implementing additional security layers when deploying LLMs in sensitive environments, regularly updating security protocols, and promptly reporting any suspected adversarial behaviors to improve our collective defense capabilities.</p>
+                <p>By using this LLM system, you acknowledge these inherent vulnerabilities and agree to use the technology responsibly. We reserve the right to monitor for and prevent suspected adversarial attacks to maintain system integrity and safety.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const userModeCard = document.getElementById('userModeCard');
+        const debugModeCard = document.getElementById('debugModeCard');
+        const userModeRadio = document.getElementById('userModeRadio');
+        const debugModeRadio = document.getElementById('debugModeRadio');
+
+        userModeCard.addEventListener('click', function() {
+            userModeCard.classList.add('selected');
+            debugModeCard.classList.remove('selected');
+            userModeRadio.checked = true;
+        });
+
+        debugModeCard.addEventListener('click', function() {
+            debugModeCard.classList.add('selected');
+            userModeCard.classList.remove('selected');
+            debugModeRadio.checked = true;
+        });
+    });
+</script>
+{% endblock %} 
